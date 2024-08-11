@@ -3,7 +3,7 @@ import json  # noqa: E401
 import time
 import types
 from contextlib import asynccontextmanager, contextmanager
-from datetime import datetime
+from dateutil import parser
 from enum import Enum
 from typing import (
     Any,
@@ -426,7 +426,7 @@ class IBMWatsonXAI(BaseLLM):
         )
         if json_resp.get("created_at"):
             model_response.created = int(
-                datetime.fromisoformat(json_resp["created_at"]).timestamp()
+                parser.isoparse(json_resp["created_at"]).timestamp()
             )
         else:
             model_response.created = int(time.time())
